@@ -97,11 +97,11 @@ export default function Coin({
 
   let coinText = '+2$'
 
-  if (score < 1) {
+  if (score <= 1) {
     coinText = '+0.1$'
-  } else if (score < 10) {
+  } else if (score <= 10) {
     coinText = '+0.5$'
-  } else if (score < 50) {
+  } else if (score <= 50) {
     coinText = '+1$'
   }
 
