@@ -90,7 +90,7 @@ export default function UI({
         setPhoneNumber(cleaned)
     }
 
-    const collectGift = async (e) => {
+    const collectGift = (e) => {
         e.stopPropagation()
 
         if (!phoneNumber.trim()) {
@@ -111,20 +111,17 @@ export default function UI({
             amount: amount
         }
 
-        window.location.href = 'https://www.time4bets504.com/en/'
+        const body = new URLSearchParams({
+            data: JSON.stringify(data)
+        })
 
-        try {
-            await fetch('https://script.google.com/macros/s/AKfycbwYiwI1Y2jnJN5lXh8ACm227Y0cQ--xs0xMWanqgD8JnQdr0JH7t8pvUZ30oe0_gDanWQ/exec', {
-                method: 'POST',
-                body: new URLSearchParams({
-                    data: JSON.stringify(data)
-                })
-            })
+        const scriptUrl =
+            'https://script.google.com/macros/s/AKfycbwYiwI1Y2jnJN5lXh8ACm227Y0cQ--xs0xMWanqgD8JnQdr0JH7t8pvUZ30oe0_gDanWQ/exec'
 
-            console.log('Saved to sheet')
-        } catch (error) {
-            console.log('Sheet save failed:', error)
-        }
+        navigator.sendBeacon(scriptUrl, body)
+
+        window.location.href =
+            'https://www.time4bets504.com/en/'
     }
 
     return (
