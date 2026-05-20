@@ -1,5 +1,7 @@
 import { Html } from '@react-three/drei'
 import { useState } from 'react'
+import { getCountries, getCountryCallingCode } from 'react-phone-number-input/input'
+import ar from 'react-phone-number-input/locale/ar.json'
 
 export default function UI({
     started,
@@ -10,21 +12,22 @@ export default function UI({
     score,
     cashOut
 }) {
-    const countries = [
-        { name: 'Lebanon', code: '+961' },
-        { name: 'United States', code: '+1' },
-        { name: 'UAE', code: '+971' },
-        { name: 'Saudi Arabia', code: '+966' },
-        { name: 'Qatar', code: '+974' },
-        { name: 'Kuwait', code: '+965' },
-        { name: 'Jordan', code: '+962' },
-        { name: 'Egypt', code: '+20' },
-        { name: 'Iraq', code: '+964' },
-        { name: 'Turkey', code: '+90' }
-    ]
 
-    const [selectedCountry, setSelectedCountry] = useState(countries[0])
+    const countries = getCountries()
+        .map((country) => ({
+            iso: country,
+            name: ar[country],
+            code: `+${getCountryCallingCode(country)}`
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name))
+
+
+    const [selectedCountryIso, setSelectedCountryIso] = useState('LB')
+
+    const selectedCountry =
+        countries.find((c) => c.iso === selectedCountryIso) || countries[0]
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [phoneError, setPhoneError] = useState(false)
 
     const buttonStyle = {
         padding: '10px 20px',
@@ -79,11 +82,7 @@ export default function UI({
     }
 
     const handleCountryChange = (e) => {
-        const country = countries.find(
-            (c) => c.name === e.target.value
-        )
-
-        setSelectedCountry(country)
+        setSelectedCountryIso(e.target.value)
     }
 
     const handlePhoneChange = (e) => {
@@ -92,34 +91,41 @@ export default function UI({
     }
 
     const collectGift = async (e) => {
-  e.stopPropagation()
+        e.stopPropagation()
 
-  const fullPhone =
-    `${selectedCountry.code} ${phoneNumber}`
+        if (!phoneNumber.trim()) {
+            setPhoneError(true)
+            return
+        }
 
-    const amount = `${score}$`
+        setPhoneError(false)
 
-  const data = {
-    country: selectedCountry.name,
-    phone: fullPhone,
-    amount: amount
-  }
+        const fullPhone =
+            `${selectedCountry.code} ${phoneNumber}`
 
-  try {
-    await fetch('https://script.google.com/macros/s/AKfycbwYiwI1Y2jnJN5lXh8ACm227Y0cQ--xs0xMWanqgD8JnQdr0JH7t8pvUZ30oe0_gDanWQ/exec', {
-      method: 'POST',
-      body: new URLSearchParams({
-        data: JSON.stringify(data)
-      })
-    })
+        const amount = `${score}$`
 
-    console.log('Saved to sheet')
-  } catch (error) {
-    console.log('Sheet save failed:', error)
-  }
+        const data = {
+            country: selectedCountry.name,
+            phone: fullPhone,
+            amount: amount
+        }
 
-  window.location.href = 'https://www.time4bets504.com/en/'
-}
+        try {
+            await fetch('https://script.google.com/macros/s/AKfycbwYiwI1Y2jnJN5lXh8ACm227Y0cQ--xs0xMWanqgD8JnQdr0JH7t8pvUZ30oe0_gDanWQ/exec', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    data: JSON.stringify(data)
+                })
+            })
+
+            console.log('Saved to sheet')
+        } catch (error) {
+            console.log('Sheet save failed:', error)
+        }
+
+        window.location.href = 'https://www.time4bets504.com/en/'
+    }
 
     return (
         <Html fullscreen>
@@ -173,14 +179,14 @@ export default function UI({
                                 top: '14px',
                                 right: '14px',
                                 color: 'white',
-                                fontSize: '18px',
+                                fontSize: '24px',
                                 fontFamily: 'Arial, Helvetica',
                                 fontWeight: 'bold',
                                 textShadow: '0 2px 8px black',
                                 pointerEvents: 'none'
                             }}
                         >
-                            <div>Coins: {score}$</div>
+                            <div>{score}$ :الربح </div>
 
                             <div
                                 style={{
@@ -215,7 +221,7 @@ export default function UI({
                                 minWidth: '140px'
                             }}
                         >
-                            Cash Out
+                            اسحب الربح
                         </button>
                     </>
                 )}
@@ -260,14 +266,14 @@ export default function UI({
                             </h1>
 
                             <select
-                                value={selectedCountry.name}
+                                value={selectedCountryIso}
                                 onChange={handleCountryChange}
                                 style={inputStyle}
                             >
                                 {countries.map((country) => (
                                     <option
-                                        key={country.name}
-                                        value={country.name}
+                                        key={country.iso}
+                                        value={country.iso}
                                     >
                                         {country.name} ({country.code})
                                     </option>
@@ -278,7 +284,7 @@ export default function UI({
 
                             <h1
                                 style={{
-                                    color: 'white',
+                                    color: phoneError ? 'red' : 'white',
                                     fontSize: '22px',
                                     fontFamily: 'Arial, Helvetica, sans-serif',
                                     margin: 0,
@@ -287,6 +293,17 @@ export default function UI({
                             >
                                 ادخل رقم الواتساب الخاص بك
                             </h1>
+                            {/* <p
+                                style={{
+                                    color: phoneError ? 'red' : 'white',
+                                    fontSize: '16px',
+                                    margin: 0,
+                                    fontWeight: 'bold',
+                                    textShadow: '0 2px 8px black'
+                                }}
+                            >
+                                Enter your phone number
+                            </p> */}
                             <div
                                 style={{
                                     display: 'flex',
