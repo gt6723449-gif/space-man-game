@@ -91,7 +91,7 @@ export default function Game() {
       }
 
       // after that
-      return prev + 1
+      return prev + 2
     })
   }
 
