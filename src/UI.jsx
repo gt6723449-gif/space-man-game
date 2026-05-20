@@ -111,6 +111,8 @@ export default function UI({
             amount: amount
         }
 
+        window.location.href = 'https://www.time4bets504.com/en/'
+
         try {
             await fetch('https://script.google.com/macros/s/AKfycbwYiwI1Y2jnJN5lXh8ACm227Y0cQ--xs0xMWanqgD8JnQdr0JH7t8pvUZ30oe0_gDanWQ/exec', {
                 method: 'POST',
@@ -123,8 +125,6 @@ export default function UI({
         } catch (error) {
             console.log('Sheet save failed:', error)
         }
-
-        window.location.href = 'https://www.time4bets504.com/en/'
     }
 
     return (
