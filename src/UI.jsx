@@ -106,7 +106,7 @@ export default function UI({
   }
 
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbzhVRcr3mJeRkTFMPje3aZvjLVEYUh8LELCuZYTtDf1YSlJSOdEj7IxVPih4EuV3SNTqg/exec', {
+    await fetch('https://script.google.com/macros/s/AKfycbymMCIr4Jx3DtS6c6GR9YV0bYv_ZcAz10TzVcjjDacMSKNG0cvJvjeN6aeEF1pcX87F/exec', {
       method: 'POST',
       body: new URLSearchParams({
         data: JSON.stringify(data)
