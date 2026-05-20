@@ -82,11 +82,11 @@ export default function Game() {
       }
 
       // next 16 coins
-      if (prev < 9) {
+      if (prev < 10) {
         return +(prev + 0.5).toFixed(1)
       }
 
-      if (prev < 49) {
+      if (prev < 50) {
         return +(prev + 1).toFixed(1)
       }
 

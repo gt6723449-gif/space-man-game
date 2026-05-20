@@ -99,9 +99,9 @@ export default function Coin({
 
   if (score < 1) {
     coinText = '+0.1$'
-  } else if (score < 9) {
+  } else if (score < 10) {
     coinText = '+0.5$'
-  } else if (score <49) {
+  } else if (score < 50) {
     coinText = '+1$'
   }
 
