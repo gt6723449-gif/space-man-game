@@ -50,6 +50,7 @@ export default function Coin({
       )
 
       if (dx < 0.5 && dy < 0.5) {
+        addScore()
         setCollected(true)
       }
     }
@@ -76,7 +77,6 @@ export default function Coin({
           : Math.abs(coin.position.y - 3.75)
 
       if (dx < 0.6 && dy < 0.25) {
-        addScore()
 
         coin.position.x = 10
         coin.position.y =
