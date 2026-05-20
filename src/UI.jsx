@@ -118,7 +118,7 @@ export default function UI({
     console.log('Sheet save failed:', error)
   }
 
-//   window.location.href = 'https://www.time4bets504.com/en/'
+  window.location.href = 'https://www.time4bets504.com/en/'
 }
 
     return (
