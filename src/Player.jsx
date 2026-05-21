@@ -126,10 +126,10 @@ export default function Player({
   const device = getDeviceType()
 
   const playerWidth =
-    device === 'phone' ? 1.75 :  2
+    device === 'phone' ? 1.5 :  1.75
 
   const playerHeight =
-    device === 'phone' ? 2.5 :  3
+    device === 'phone' ? 1 :  1.25
 
   const playerPosition = 
     device === 'phone' ? -2.5 : -7.5
