@@ -6,6 +6,7 @@ import Player from './Player'
 import Coin from './Coin'
 import Meteor from './Meteor'
 import UI from './UI'
+import GameRealtime from './GameRealTime'
 
 function calculateMeteorCount(score) {
   let count = 4
@@ -167,6 +168,8 @@ export default function Game() {
           onCrash={() => setGameOver(true)}
         />
       ))}
+
+      <GameRealtime started={started && !gameOver && !won} />
 
       <UI
         started={started}

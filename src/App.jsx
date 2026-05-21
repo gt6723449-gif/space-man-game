@@ -1,24 +1,25 @@
 import { Canvas } from '@react-three/fiber'
 import Game from './Game'
+import AdminDashboard from './AdminDashboard'
 import './index.css'
 
 export default function App() {
-  return (
-    <>
-      {/* <div className="rotate-warning">
-        Please rotate your phone back to portrait mode.
-      </div> */}
+  const isAdminPage =
+    window.location.pathname === '/admin'
 
-      <Canvas
-        orthographic
-        camera={{
-          zoom: 70,
-          position: [0, 0, 10]
-        }}
-      >
-        <ambientLight intensity={2} />
-        <Game />
-      </Canvas>
-    </>
+  if (isAdminPage) {
+    return <AdminDashboard />
+  }
+
+  return (
+    <Canvas
+      camera={{
+        position: [0, 0, 8],
+        fov: 50
+      }}
+    >
+      <ambientLight intensity={2} />
+      <Game />
+    </Canvas>
   )
 }

@@ -129,7 +129,7 @@ export default function Player({
     device === 'phone' ? 1.5 :  1.75
 
   const playerHeight =
-    device === 'phone' ? 1 :  1.25
+    device === 'phone' ? 1 :  1
 
   const playerPosition = 
     device === 'phone' ? -2.5 : -7.5
