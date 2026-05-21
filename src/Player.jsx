@@ -85,7 +85,7 @@ export default function Player({
     const player = playerRef.current
     if (!player) return
 
-    player.position.x = -2.5
+    player.position.x = playerPosition
 
     if (touch.current.active) {
       const isPhone = window.innerWidth <= 768
@@ -126,13 +126,13 @@ export default function Player({
   const device = getDeviceType()
 
   const playerWidth =
-    device === 'phone' ? 1.5 :  1.75
+    device === 'phone' ? 1.25 :  1.75
 
   const playerHeight =
-    device === 'phone' ? 1 :  1
+    device === 'phone' ? 0.75 :  1
 
   const playerPosition = 
-    device === 'phone' ? -2.5 : -7.5
+    device === 'phone' ? -1.5 : -6.5
 
   return (
     <mesh ref={playerRef} position={[playerPosition, 0, 0]}>

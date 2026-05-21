@@ -1,3 +1,4 @@
+import { Html } from '@react-three/drei'
 import { useEffect, useRef, useState } from 'react'
 import { supabase } from './supabaseClient'
 
@@ -27,11 +28,13 @@ export default function GameRealtime({ started }) {
       }
     })
 
-    channel.on('broadcast', {
-      event: 'admin-message'
-    }, (payload) => {
-      setPopupMessage(payload.payload.message)
-    })
+    channel.on(
+      'broadcast',
+      { event: 'admin-message' },
+      (payload) => {
+        setPopupMessage(payload.payload.message)
+      }
+    )
 
     channel.subscribe(async (status) => {
       if (status === 'SUBSCRIBED') {
@@ -54,50 +57,53 @@ export default function GameRealtime({ started }) {
   if (!popupMessage) return null
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 9999,
-        background: 'rgba(0,0,0,0.65)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px'
-      }}
-    >
+    <Html fullscreen>
       <div
         style={{
-          background: '#111',
-          color: 'white',
-          border: '2px solid #4dff4d',
-          borderRadius: '16px',
-          padding: '24px',
-          maxWidth: '320px',
-          textAlign: 'center',
-          fontFamily: 'Arial'
+          position: 'fixed',
+          inset: 0,
+          zIndex: 9999,
+          background: 'rgba(0,0,0,0.65)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          pointerEvents: 'auto'
         }}
       >
-        <h2 style={{ color: '#4dff4d' }}>
-          Message
-        </h2>
-
-        <p>{popupMessage}</p>
-
-        <button
-          onClick={() => setPopupMessage('')}
+        <div
           style={{
-            padding: '10px 20px',
-            borderRadius: '10px',
-            border: '1px solid #4dff4d',
-            background: '#1a1a1a',
+            background: '#111',
             color: 'white',
-            fontWeight: 'bold'
+            border: '2px solid #4dff4d',
+            borderRadius: '16px',
+            padding: '24px',
+            maxWidth: '320px',
+            textAlign: 'center',
+            fontFamily: 'Arial'
           }}
         >
-          OK
-        </button>
+          <h2 style={{ color: '#4dff4d' }}>
+            Message
+          </h2>
+
+          <p>{popupMessage}</p>
+
+          <button
+            onClick={() => setPopupMessage('')}
+            style={{
+              padding: '10px 20px',
+              borderRadius: '10px',
+              border: '1px solid #4dff4d',
+              background: '#1a1a1a',
+              color: 'white',
+              fontWeight: 'bold'
+            }}
+          >
+            OK
+          </button>
+        </div>
       </div>
-    </div>
+    </Html>
   )
 }

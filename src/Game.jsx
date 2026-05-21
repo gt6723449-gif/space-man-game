@@ -119,7 +119,7 @@ export default function Game() {
     )
 
     if (playerRef.current) {
-      playerRef.current.position.x = -2.5
+      playerRef.current.position.x = window.innerWidth <= 768 ? -2.5 : -6.5
       playerRef.current.position.y = 0
       playerRef.current.rotation.z = 0
     }
